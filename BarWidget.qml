@@ -34,9 +34,9 @@ BarWidget {
     // pointsize 100), and its thin silhouette (leaf, bite, stem) also reads
     // visually lighter than a solid glyph at matched height. The bar's icon
     // renderer only corrects horizontal centering, not per-glyph vertical
-    // scale or visual weight, so bump the size well past height-parity to
-    // compensate.
-    fontSize: Math.round(Style.bar.iconFont * 1.4)
+    // scale or visual weight, so bump the size past height-parity to
+    // compensate — tuned by eye against the neighboring icons.
+    fontSize: Math.round(Style.bar.iconFont * 1.25)
     tooltipText: "Switch boot target to macOS"
     onPressed: root.launch()
   }
