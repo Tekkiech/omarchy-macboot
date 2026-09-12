@@ -36,7 +36,7 @@ BarWidget {
     // renderer only corrects horizontal centering, not per-glyph vertical
     // scale or visual weight, so bump the size past height-parity to
     // compensate — tuned by eye against the neighboring icons.
-    fontSize: Math.round(Style.bar.iconFont * 1.25)
+    fontSize: Math.round(Style.bar.iconFont * 1.2)
     tooltipText: "Switch boot target to macOS"
     onPressed: root.launch()
   }
