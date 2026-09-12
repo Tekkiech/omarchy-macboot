@@ -31,9 +31,12 @@ BarWidget {
     text: ""
     // The Apple glyph's ink is noticeably shorter than its neighbors' at the
     // same point size in this Nerd Font (measured ~82px vs ~94px tall at
-    // pointsize 100) and the bar's icon renderer only corrects horizontal
-    // centering, not per-glyph vertical scale, so bump the size to compensate.
-    fontSize: Math.round(Style.bar.iconFont * 1.15)
+    // pointsize 100), and its thin silhouette (leaf, bite, stem) also reads
+    // visually lighter than a solid glyph at matched height. The bar's icon
+    // renderer only corrects horizontal centering, not per-glyph vertical
+    // scale or visual weight, so bump the size well past height-parity to
+    // compensate.
+    fontSize: Math.round(Style.bar.iconFont * 1.4)
     tooltipText: "Switch boot target to macOS"
     onPressed: root.launch()
   }
