@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "tekkiech.macboot",
+  "name": "macOS Boot Switch",
+  "version": "1.0.0",
+  "author": "tekkiech",
+  "license": "MIT",
+  "description": "One-click wrapper around asahi-bless: pick a boot volume or switch straight back into macOS.",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "macOS Boot Switch",
+    "description": "Click to list boot volumes (via asahi-bless) and either set the next boot to macOS or reboot into it right away.",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

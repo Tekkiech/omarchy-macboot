@@ -1,0 +1,52 @@
+#!/bin/bash
+# Interactive picker used by the tekkiech.macboot bar widget. Runs inside a
+# floating terminal (see BarWidget.qml), so gum's TUI has a real tty.
+
+set -uo pipefail
+
+echo "Reading boot volumes (you may be asked for your password)..."
+volumes="$(pkexec asahi-bless --list-volumes 2>&1)"
+list_status=$?
+echo "$volumes"
+echo
+
+if (( list_status != 0 )); then
+  echo "Could not read boot volumes; you can still try setting macOS as next boot."
+  echo
+fi
+
+action=$(gum choose \
+  "Set next boot to macOS (no reboot)" \
+  "Reboot into macOS now" \
+  "Cancel")
+
+case "$action" in
+  "Set next boot to macOS (no reboot)")
+    if gum confirm "Set next boot target to macOS?"; then
+      if pkexec asahi-bless --set-boot-macos -y; then
+        echo "Next boot will be macOS. Reboot whenever you're ready."
+      else
+        echo "Failed to set next boot to macOS." >&2
+        exit 1
+      fi
+    else
+      echo "Cancelled."
+    fi
+    ;;
+  "Reboot into macOS now")
+    if gum confirm "Reboot into macOS now? Make sure your work is saved."; then
+      if pkexec asahi-bless --set-boot-macos -y; then
+        echo "Rebooting into macOS..."
+        systemctl reboot
+      else
+        echo "Failed to set next boot to macOS; not rebooting." >&2
+        exit 1
+      fi
+    else
+      echo "Cancelled."
+    fi
+    ;;
+  *)
+    echo "Cancelled."
+    ;;
+esac

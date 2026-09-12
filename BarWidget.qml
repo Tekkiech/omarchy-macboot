@@ -1,0 +1,40 @@
+import QtQuick
+import Quickshell
+import Quickshell.Io
+import qs.Commons
+import qs.Ui
+
+BarWidget {
+  id: root
+  moduleName: "tekkiech.macboot"
+
+  // Directory this plugin was loaded from, derived from this file's own URL
+  // so it still resolves correctly if the plugin is symlinked in from
+  // elsewhere rather than living directly under ~/.config/omarchy/plugins.
+  readonly property string pluginDir: {
+    var u = Qt.resolvedUrl(".").toString()
+    return u.replace(/^file:\/\//, "").replace(/\/$/, "")
+  }
+  readonly property string scriptPath: pluginDir + "/bin/macboot"
+
+  function launch() {
+    if (root.bar) root.bar.run("omarchy-launch-floating-terminal-with-presentation " + Util.shellQuote(root.scriptPath))
+  }
+
+  implicitWidth: button.implicitWidth
+  implicitHeight: button.implicitHeight
+
+  BarIconButton {
+    id: button
+    anchors.fill: parent
+    bar: root.bar
+    text: ""
+    // The Apple glyph's ink is noticeably shorter than its neighbors' at the
+    // same point size in this Nerd Font (measured ~82px vs ~94px tall at
+    // pointsize 100) and the bar's icon renderer only corrects horizontal
+    // centering, not per-glyph vertical scale, so bump the size to compensate.
+    fontSize: Math.round(Style.bar.iconFont * 1.15)
+    tooltipText: "Switch boot target to macOS"
+    onPressed: root.launch()
+  }
+}
